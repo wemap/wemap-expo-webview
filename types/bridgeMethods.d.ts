@@ -1,0 +1,23 @@
+import { Coordinates, DrawPolylineOptions, Filters, Pinpoint } from "./types/";
+export declare const createInjectedMethods: () => string;
+export declare const generateMethodCalls: (actionId: string) => {
+    centerTo: (coordinates: Coordinates, zoom?: number) => string;
+    aroundMe: () => string;
+    openEvent: (id: number) => string;
+    closeEvent: () => string;
+    openPinpoint: (id: number) => string;
+    closePinpoint: () => string;
+    setFilters: (filters: Filters) => string;
+    stopNavigation: () => string;
+    enableSidebar: () => string;
+    disableSidebar: () => string;
+    signInByToken: (token: string) => string;
+    signOut: () => string;
+    setPinpoints: (pinpoints: Pinpoint[]) => string;
+    setSourceLists: (lists: number[]) => string;
+    drawPolyline: (coordinates: Coordinates[], options: DrawPolylineOptions) => string;
+    removePolyline: (id: string) => string;
+    getUserLocation: () => string;
+    navigateToPinpoint: (id: number) => string;
+    setCenter: (coordinates: Coordinates) => string;
+};
