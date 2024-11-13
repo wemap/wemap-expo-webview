@@ -21,7 +21,7 @@ function App() {
   return (
     <View style={{ flex: 1 }}>
         <LivemapWebview
-        emmid={25414} />
+            emmid={25414} />
     </View>
   );
 }
@@ -32,10 +32,10 @@ function App() {
 ```javascript
 import React, { useRef } from 'react';
 import { View, Button } from 'react-native';
-import { LiveMap, LiveMapRef } from '@wemap/expo-livemap';
+import { LivemapWebview } from '@wemap/expo-livemap';
 
 function App() {
-  const mapRef = useRef(null);
+  const livemapWebviewRef = useRef(null);
 
   const centerTo = () => {
     livemapWebviewRef.current?.centerTo({ latitude: 43.856614, longitude: 2.352222 }, 15);
@@ -54,9 +54,9 @@ function App() {
   return (
     <View style={{ flex: 1 }}>
         <LivemapWebview
-        onContentUpdated={onContentUpdated}
-        ref={livemapWebviewRef}
-        emmid={25414} />
+            onContentUpdated={onContentUpdated}
+            ref={livemapWebviewRef}
+            emmid={25414} />
     </View>
   );
 }
