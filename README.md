@@ -20,8 +20,8 @@ import { LivemapWebview } from '@wemap/expo-livemap';
 function App() {
   return (
     <View style={{ flex: 1 }}>
-    <LivemapWebview
-      emmid={25414} />
+        <LivemapWebview
+        emmid={25414} />
     </View>
   );
 }
@@ -53,10 +53,10 @@ function App() {
 
   return (
     <View style={{ flex: 1 }}>
-    <LivemapWebview
-      onContentUpdated={onContentUpdated}
-      ref={livemapWebviewRef}
-      emmid={25414} />
+        <LivemapWebview
+        onContentUpdated={onContentUpdated}
+        ref={livemapWebviewRef}
+        emmid={25414} />
     </View>
   );
 }
