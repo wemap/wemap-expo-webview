@@ -16,13 +16,6 @@ export const createInjectedMethods = () => `
         if (this.ready) {
           livemap[command.method](...command.params).then((result) => {
             window.ReactNativeWebView.postMessage(JSON.stringify({
-              type: 'debug',
-              data: {
-                msg: command.method + ' result receive '
-              }
-            }));
-
-            window.ReactNativeWebView.postMessage(JSON.stringify({
               type: 'methodResult',
               data: {
                 id: command.id,
@@ -41,13 +34,6 @@ export const createInjectedMethods = () => `
       window.ReactNativeWebView.wemapBridge.ready = true;
       window.ReactNativeWebView.wemapBridge.queue.forEach(function(command) {
         livemap[command.method](...command.params).then((result) => {
-          window.ReactNativeWebView.postMessage(JSON.stringify({
-            type: 'debug',
-            data: {
-              msg: command.method + ' result receive '
-            }
-          }));
-
           window.ReactNativeWebView.postMessage(JSON.stringify({
             type: 'methodResult',
             data: {

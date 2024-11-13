@@ -15,25 +15,19 @@ npm install @wemap/expo-livemap
 ```javascript
 import React from 'react';
 import { View } from 'react-native';
-import { LiveMap } from '@wemap/expo-livemap';
+import { LivemapWebview } from '@wemap/expo-livemap';
 
 function App() {
-  const handleCustomMessage = (event) => {
-    console.log('Received message from LiveMap:', event);
-  };
-
   return (
     <View style={{ flex: 1 }}>
-      <LiveMap
-        source={{ uri: 'https://livemap.getwemap.com' }}
-        onCustomMessage={handleCustomMessage}
-      />
+    <LivemapWebview
+      emmid={25414} />
     </View>
   );
 }
 ```
 
-### Advanced Usage with Ref
+### Advanced Usage with Ref and event
 
 ```javascript
 import React, { useRef } from 'react';
@@ -41,64 +35,57 @@ import { View, Button } from 'react-native';
 import { LiveMap, LiveMapRef } from '@wemap/expo-livemap';
 
 function App() {
-  const mapRef = useRef<LiveMapRef>(null);
+  const mapRef = useRef(null);
 
-  const handleCustomMessage = (event) => {
-    console.log('Received message from LiveMap:', event);
+  const centerTo = () => {
+    livemapWebviewRef.current?.centerTo({ latitude: 43.856614, longitude: 2.352222 }, 15);
   };
 
-  const sendMessageToMap = () => {
-    mapRef.current?.postCustomMessage('Hello from React Native!');
+  const getUserLocation = () => {
+    livemapWebviewRef.current?.getUserLocation().then((userLocation) => {
+      console.log(userLocation)
+    });
+  };
+
+  const onContentUpdated = (data) => {
+    console.log('onContentUpdated', data.items.length);
   };
 
   return (
     <View style={{ flex: 1 }}>
-      <LiveMap
-        ref={mapRef}
-        source={{ uri: 'https://livemap.getwemap.com' }}
-        onCustomMessage={handleCustomMessage}
-      />
-      <Button 
-        title="Send Message to LiveMap" 
-        onPress={sendMessageToMap} 
-      />
+    <LivemapWebview
+      onContentUpdated={onContentUpdated}
+      ref={livemapWebviewRef}
+      emmid={25414} />
     </View>
   );
 }
-```
-
-### WebView JavaScript Interface
-
-Inside your web content, you can send messages to React Native using the injected postCustomMessage function:
-
-```javascript
-// Send message from LiveMap to React Native
-window.postCustomMessage({
-  type: 'mapEvent',
-  data: 'Map is ready!'
-});
 ```
 
 ## API Reference
 
 ### Props
 
-The component accepts all standard React Native WebView props plus:
+The component accepts all standard React Native WebView props plus specific livemap event like: 
 
-onCustomMessage: (event: any) => void
-Callback function that handles messages sent from the LiveMap
+```javascript
+onContentUpdated(data) => void
+```
+
+All events are specified in the [TypeScript definitions file](./src/index.d.ts)
 
 ### Ref Methods
 
-postCustomMessage(message: string): Sends a message to the LiveMap
-reload(): Reloads the LiveMap
+The ref component can be used to trigger specific map action like `centerTo` or `getUserLocation`.
+
+All ref methods are specified in the [TypeScript definitions file](./src/index.d.ts)
 
 ## TypeScript Support
 
 The package includes TypeScript definitions. For TypeScript projects, you can import types:
 
 ```typescript
-import { LiveMapProps, LiveMapRef } from '@wemap/expo-livemap';
+import { LivemapWebviewProps, LivemapWebviewRef } from '@wemap/expo-livemap';
 ```
 
 ## Requirements
@@ -112,4 +99,4 @@ MIT
 
 ## Author
 
-Simon Milleto <simon@getwemap.com>
+Wemap
