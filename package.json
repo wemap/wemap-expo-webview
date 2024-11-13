@@ -1,6 +1,6 @@
 {
   "name": "@wemap/expo-livemap",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Expose a Livemap component and methods to interact with it",
   "main": "src/index.ts",
   "module": "src/index.ts",
