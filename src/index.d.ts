@@ -81,7 +81,13 @@ export interface LivemapWebviewRef {
   drawPolyline: (
     coordinates: Coordinates[],
     options?: DrawPolylineOptions,
-  ) => void;
+  ) => Promise<{
+    id: string;
+    geometry: {
+      type: "LineString";
+      coordinates: [number, number][];
+    }[];
+  }>;
   removePolyline: (id: string) => void;
   getUserLocation: () => Promise<{
     latitude: number;

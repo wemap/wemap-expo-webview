@@ -95,7 +95,13 @@ export interface LivemapWebviewRef {
   drawPolyline: (
     coordinates: Coordinates[],
     options?: DrawPolylineOptions,
-  ) => void;
+  ) => Promise<{
+    id: string;
+    geometry: {
+      type: "LineString";
+      coordinates: [number, number][];
+    }[];
+  }>;
   removePolyline: (id: string) => void;
   getUserLocation: () => Promise<{
     latitude: number;
@@ -199,9 +205,20 @@ const LivemapWebview = forwardRef<LivemapWebviewRef, LivemapWebviewProps>(
         options: DrawPolylineOptions = {},
       ) => {
         const actionId = generateUUID();
-        webViewRef.current?.injectJavaScript(
-          generateMethodCalls(actionId).drawPolyline(coordinates, options),
-        );
+
+        return new Promise<{
+          id: string;
+          geometry: {
+            type: "LineString";
+            coordinates: [number, number][];
+          }[];
+        }>((resolve) => {
+          returnResultPromises.current[actionId] = resolve;
+
+          webViewRef.current?.injectJavaScript(
+            generateMethodCalls(actionId).drawPolyline(coordinates, options),
+          );
+        });
       },
       removePolyline: (id: string) => {
         const actionId = generateUUID();
