@@ -1,4 +1,4 @@
-import { Coordinates, DrawPolylineOptions, Filters, Pinpoint } from "./types/";
+import { Coordinates, DrawPolylineOptions, Filters, Marker, Pinpoint } from "./types/";
 
 type Command = {
   method: string;
@@ -263,6 +263,22 @@ export const generateMethodCalls = function (actionId: string) {
             lng: coordinates.longitude,
           },
         ],
+      };
+      return sendToWemapBridge(command);
+    },
+    addMarker: (marker: Marker) => {
+      const command = {
+        id: actionId,
+        method: "addMarker",
+        params: [marker],
+      };
+      return sendToWemapBridge(command);
+    },
+    removeMarker: (id: string) => {
+      const command = {
+        id: actionId,
+        method: "removeMarker",
+        params: [id],
       };
       return sendToWemapBridge(command);
     },

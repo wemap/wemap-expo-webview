@@ -3,7 +3,7 @@ import { WebView } from "react-native-webview";
 import type { WebViewProps, WebViewMessageEvent } from "react-native-webview";
 
 import { createInjectedMethods, generateMethodCalls } from "./bridgeMethods";
-import { Coordinates, DrawPolylineOptions, Filters, Pinpoint } from "./types";
+import { Coordinates, DrawPolylineOptions, Filters, Marker, Pinpoint } from "./types";
 import { generateUUID } from "./utils";
 
 export interface LivemapWebviewProps extends WebViewProps {
@@ -102,6 +102,8 @@ export interface LivemapWebviewRef {
       coordinates: [number, number][];
     }[];
   }>;
+  addMarker: (marker: Marker) => Promise<Marker & { id: string }>;
+  removeMarker: (id: string) => void;
   removePolyline: (id: string) => void;
   getUserLocation: () => Promise<{
     latitude: number;
@@ -258,6 +260,23 @@ const LivemapWebview = forwardRef<LivemapWebviewRef, LivemapWebviewProps>(
         const actionId = generateUUID();
         webViewRef.current?.injectJavaScript(
           generateMethodCalls(actionId).centerTo(coordinates, zoom),
+        );
+      },
+      addMarker: (marker: Marker) => {
+        const actionId = generateUUID();
+
+        return new Promise<Marker & { id: string }>((resolve) => {
+          returnResultPromises.current[actionId] = resolve;
+
+          webViewRef.current?.injectJavaScript(
+            generateMethodCalls(actionId).addMarker(marker),
+          );
+        });
+      },
+      removeMarker: (id: string) => {
+        const actionId = generateUUID();
+        webViewRef.current?.injectJavaScript(
+          generateMethodCalls(actionId).removeMarker(id),
         );
       },
     }));

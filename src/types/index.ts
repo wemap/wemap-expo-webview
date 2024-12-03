@@ -11,19 +11,19 @@ export type Filters = {
 };
 
 export type Pinpoint = {
-    id: number;
-    latitude: number;
-    longitude: number;
-    name: string;
-    address?: string;
-    altitude?: number | null;
-    description?: string;
-    image_url?: string;
-    link_url?: string | null;
-    media_url?: string | null;
-    media_type?: "image" | "video" | null;
-    tags?: string[];
-    external_data?: Record<string, any>;
+  id: number;
+  latitude: number;
+  longitude: number;
+  name: string;
+  address?: string;
+  altitude?: number | null;
+  description?: string;
+  image_url?: string;
+  link_url?: string | null;
+  media_url?: string | null;
+  media_type?: "image" | "video" | null;
+  tags?: string[];
+  external_data?: Record<string, any>;
 };
 
 export type DrawPolylineOptions = {
@@ -31,4 +31,22 @@ export type DrawPolylineOptions = {
   opacity?: number;
   useNetwork?: boolean;
   width?: number;
+};
+
+export type Marker = {
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
+  img: string;
+  anchor?:
+    | "center"
+    | "top"
+    | "bottom"
+    | "left"
+    | "right"
+    | "top-left"
+    | "top-right"
+    | "bottom-left"
+    | "bottom-right";
 };

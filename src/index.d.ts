@@ -89,6 +89,8 @@ export interface LivemapWebviewRef {
     }[];
   }>;
   removePolyline: (id: string) => void;
+  addMarker: (marker: Marker) => Promise<Marker & { id: string }>;
+  removeMarker: (id: string) => void;
   getUserLocation: () => Promise<{
     latitude: number;
     longitude: number;
@@ -134,4 +136,22 @@ export type DrawPolylineOptions = {
   opacity?: number;
   useNetwork?: boolean;
   width?: number;
+};
+
+export type Marker = {
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
+  img: string;
+  anchor?:
+    | "center"
+    | "top"
+    | "bottom"
+    | "left"
+    | "right"
+    | "top-left"
+    | "top-right"
+    | "bottom-left"
+    | "bottom-right";
 };
